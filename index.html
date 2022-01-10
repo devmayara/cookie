@@ -32,9 +32,6 @@
     </div>
   </div>    <!-- Cookies -->
 
-  <!-- JavaScript -->
-  <script src="js/script.js"></script>
-
   <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
   <script
   src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -46,6 +43,51 @@
   </script>
   <script 
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+  </script>
+
+  <!-- JavaScript -->
+  <script>
+    $(document).ready(function () {
+      var cookie = false;
+      var cookieContent = $(".cookie-disclaimer");
+
+      checkCookie();
+
+      if (cookie === true) {
+        cookieContent.hide();
+      }
+
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+      }
+
+      function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i].trim();
+          if (c.indexOf(name) === 0)
+            return c.substring(name.length, c.length);
+        }
+        return "";
+      }
+
+      function checkCookie() {
+        var check = getCookie("nomeCookie");
+        if (check !== "") {
+          return (cookie = true);
+        } else {
+          return (cookie = false); //setCookie("nomeCookie", "accepted", 365);
+        }
+      }
+      $(".accept-cookie").click(function () {
+        setCookie("nomeCookie", "accepted", 365);
+        cookieContent.hide(500);
+      });
+    });
   </script>
 
 </body>
